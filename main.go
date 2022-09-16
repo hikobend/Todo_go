@@ -7,6 +7,8 @@ import (
 )
 
 func main() {
+	// configリストを読み込んで表示する
+	// configパッケージのConfigという変数のPort
 	fmt.Println(config.Config.Port)
 	fmt.Println(config.Config.SQLDriver)
 	fmt.Println(config.Config.DbName)
