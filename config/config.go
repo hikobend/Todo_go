@@ -1,6 +1,10 @@
 package config
 
-import "log"
+import (
+	"log"
+
+	"gopkg.in/go-ini/ini.v1"
+)
 
 type ConfigList struct {
 	Port      string
@@ -16,7 +20,6 @@ func init() {
 }
 
 func LoadConfig() {
-
 	cfg, err := ini.Load("config.ini")
 	if err != nil {
 		log.Fatalln(err)
