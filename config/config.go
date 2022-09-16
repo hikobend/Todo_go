@@ -28,6 +28,7 @@ var Config ConfigList
 func init() {
 	// main関数より前にini関数が呼ばれて,Loadconfigを実行する
 	LoadConfig()
+	// main関数の前に設定したい
 	utils.LoggingSettings(Config.LogFile)
 }
 
