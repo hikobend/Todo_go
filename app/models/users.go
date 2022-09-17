@@ -64,9 +64,13 @@ func GetUser(id int) (user User, err error) {
 	return user, err
 }
 
+// 関数作成
 func (u *User) UpdateUser() (err error) {
+	// コマンド作成
 	cmd := `update users set name = ?, email = ? where id = ?`
+	// コマンド実行
 	_, err = Db.Exec(cmd, u.Name, u.Email, u.ID)
+	// エラーハンドリング
 	if err != nil {
 		log.Fatalln(err)
 	}

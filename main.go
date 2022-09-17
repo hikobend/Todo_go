@@ -26,10 +26,14 @@ func main() {
 	// ユーザーを出力する
 	fmt.Println(u)
 
+	// ユーザー更新
 	u.Name = "kohei2"
 	u.Email = "kohei2@test.com"
+	// ユーザー更新
 	u.UpdateUser()
+	// ユーザー取得
 	u, _ = models.GetUser(1)
+	// ユーザー表示
 	fmt.Println(u)
 
 	u.DeleteUser()
