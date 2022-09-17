@@ -29,16 +29,20 @@ func (u *User) CreateTodo(content string) (err error) {
 	return err
 }
 
+// 関数を作成
 func GetTodo(id int) (todo Todo, err error) {
+	// コマンド作成
 	cmd := `select id, content, user_id, created_at from todos where id = ?`
+	// todo宣言
 	todo = Todo{}
-
+	// コマンド実行
 	err = Db.QueryRow(cmd, id).Scan(
 		&todo.ID,
 		&todo.Content,
 		&todo.UserID,
 		&todo.CreatedAt)
 
+	// todo errを返す
 	return todo, err
 }
 

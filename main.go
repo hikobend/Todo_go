@@ -46,7 +46,9 @@ func main() {
 	// user, _ := models.GetUser(2)
 	// user.CreateTodo("first todo")
 
+	// first todoを取得
 	// t, _ := models.GetTodo(1)
+	// tを表示
 	// fmt.Println(t)
 
 	// user, _ := models.GetUser(3)
