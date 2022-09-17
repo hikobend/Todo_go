@@ -60,6 +60,7 @@ func main() {
 	// 	fmt.Println(v)
 	// }
 
+	// ユーザーの作成
 	// user2, _ := models.GetUser(3)
 	// todos, _ := user2.GetTodoByUser()
 	// for _, v := range todos {
