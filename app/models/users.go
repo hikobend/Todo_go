@@ -77,9 +77,14 @@ func (u *User) UpdateUser() (err error) {
 	return err
 }
 
+// 関数の作成
 func (u *User) DeleteUser() (err error) {
+	// コマンドの作成
 	cmd := `delete from users where id = ?`
+	// コマンドの実行
+	// idが一致するものを削除する
 	_, err = Db.Exec(cmd, u.ID)
+	// エラーハンドリング
 	if err != nil {
 		log.Fatalln(err)
 	}

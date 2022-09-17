@@ -36,7 +36,9 @@ func main() {
 	// ユーザー表示
 	fmt.Println(u)
 
+	// ユーザー削除
 	u.DeleteUser()
+	// ユーザー表示
 	u, _ = models.GetUser(1)
 	fmt.Println(u)
 }
