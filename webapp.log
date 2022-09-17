@@ -1,3 +1,4 @@
 2022/09/16 20:01:51 main.go:15: test
 2022/09/16 20:25:40 main.go:17: test
 2022/09/16 21:14:12 main.go:17: test
+2022/09/16 22:43:10 users.go:33: sql: converting argument $1 type: unsupported type func() uuid.UUID, a func
