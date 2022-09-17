@@ -108,9 +108,13 @@ func (u *User) GetTodoByUser() (todos []Todo, err error) {
 	return todos, err
 }
 
+// 関数の作成。Todoメソッド
 func (t *Todo) UpdateTodo() error {
+	// コマンドの作成
 	cmd := `update todos set content = ?, user_id = ? where id = ?`
+	// コマンドの実行
 	_, err = Db.Exec(cmd, t.Content, t.UserID, t.ID)
+	// エラーハンドリング
 	if err != nil {
 		log.Fatalln(err)
 	}

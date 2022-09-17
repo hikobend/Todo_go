@@ -67,8 +67,11 @@ func main() {
 	// 	fmt.Println(v)
 	// }
 
+	// Todoを持ってくる
 	// t, _ := models.GetTodo(1)
+	// Content更新
 	// t.Content = "Update Todo"
+	// 関数の実行
 	// t.UpdateTodo()
 
 	t, _ := models.GetTodo(4)
