@@ -42,10 +42,16 @@ func (u *User) CreateUser() (err error) {
 	return err
 }
 
+// Userの取得
+// 引数と返り値
 func GetUser(id int) (user User, err error) {
+	// userの定義
 	user = User{}
+	// コマンドの作成
 	cmd := `select id, uuid, name, email, password, created_at
 	from users where id = ?`
+
+	// コマンドの実行
 	err = Db.QueryRow(cmd, id).Scan(
 		&user.ID,
 		&user.UUID,
@@ -54,6 +60,7 @@ func GetUser(id int) (user User, err error) {
 		&user.PassWord,
 		&user.CreatedAt,
 	)
+	// user, errを返す
 	return user, err
 }
 

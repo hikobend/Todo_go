@@ -20,8 +20,10 @@ func main() {
 	// ユーザーを作成
 	// u.CreateUser()
 
+	// 作成したidが1番を取ってくる
 	u, _ := models.GetUser(1)
 
+	// ユーザーを出力する
 	fmt.Println(u)
 
 	u.Name = "kohei2"
