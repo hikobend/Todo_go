@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// struct作成
 type User struct {
 	ID        int
 	UUID      string
@@ -14,7 +15,10 @@ type User struct {
 	CreatedAt time.Time
 }
 
+// Userの作成
+// User型のメソッドとして作成
 func (u *User) CreateUser() (err error) {
+	// コマンド作成
 	cmd := `insert into users (
 		uuid,
 		name,
@@ -22,6 +26,8 @@ func (u *User) CreateUser() (err error) {
 		password,
 		created_at) values (?, ?, ?, ?, ?)`
 
+	// コマンドを実行
+	// UUIDとPassWordを作成する必要がある
 	_, err = Db.Exec(cmd,
 		createUUID(),
 		u.Name,
@@ -29,6 +35,7 @@ func (u *User) CreateUser() (err error) {
 		Encrypt(u.PassWord),
 		time.Now())
 
+	// エラーハンドリング
 	if err != nil {
 		log.Fatalln(err)
 	}

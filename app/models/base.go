@@ -45,12 +45,18 @@ func init() {
 	Db.Exec(cmdU)
 }
 
+// UUID作成
+// 返り値をuuidobj
 func createUUID() (uuidobj uuid.UUID) {
+	// NewUUIDを使用
 	uuidobj, _ = uuid.NewUUID()
+	// returnで返す
 	return uuidobj
 }
 
+// パスワード作成
 func Encrypt(plaintext string) (cryptext string) {
 	cryptext = fmt.Sprintf("%x", sha1.Sum([]byte(plaintext)))
+	// returnで返す
 	return cryptext
 }

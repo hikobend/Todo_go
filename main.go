@@ -9,12 +9,15 @@ func main() {
 	// init関数を呼びだす
 	fmt.Println(models.Db)
 
+	// ポインタ呼び出し
 	// u := &models.User{}
 	// u.Name = "kohei"
 	// u.Email = "kohei@test.com"
 	// u.PassWord = "koheidesu"
+	// uを表示
 	// fmt.Println(u)
 
+	// ユーザーを作成
 	// u.CreateUser()
 
 	u, _ := models.GetUser(1)
