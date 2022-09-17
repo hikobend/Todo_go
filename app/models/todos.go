@@ -46,12 +46,17 @@ func GetTodo(id int) (todo Todo, err error) {
 	return todo, err
 }
 
-func GetTodos() (todos []Todo, srr error) {
+// 複数の関数を取得
+func GetTodos() (todos []Todo, err error) {
+	// コマンド作成
 	cmd := `select id, content, user_id, created_at from todos`
+	// コマンドを渡す
 	rows, err := Db.Query(cmd)
+	// エラーハンドリング
 	if err != nil {
 		log.Fatalln(err)
 	}
+	// それぞれを取り出す
 	for rows.Next() {
 		var todo Todo
 		err = rows.Scan(&todo.ID,
@@ -59,13 +64,16 @@ func GetTodos() (todos []Todo, srr error) {
 			&todo.UserID,
 			&todo.CreatedAt)
 
+		// エラーハンドリング
 		if err != nil {
 			log.Fatalln(err)
 		}
+		// append
 		todos = append(todos, todo)
 	}
 	rows.Close()
 
+	// todos errを返す
 	return todos, err
 }
 

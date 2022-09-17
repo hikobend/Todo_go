@@ -55,6 +55,7 @@ func main() {
 	// user.CreateTodo("Third Todo")
 
 	// todos, _ := models.GetTodos()
+	// 複数表示
 	// for _, v := range todos {
 	// 	fmt.Println(v)
 	// }
