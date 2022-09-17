@@ -74,6 +74,8 @@ func main() {
 	// 関数の実行
 	// t.UpdateTodo()
 
+	// Todoリストを指定
 	t, _ := models.GetTodo(4)
+	// 関数の実行
 	t.DeleteTodo()
 }

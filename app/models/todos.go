@@ -121,11 +121,15 @@ func (t *Todo) UpdateTodo() error {
 	return err
 }
 
+// 関数の作成。Todoメソッド
 func (t *Todo) DeleteTodo() error {
+	// コマンド作成
 	cmd := `delete from todos where id = ?`
+	// コマンドを実行
 	_, err = Db.Exec(cmd, t.ID)
 	if err != nil {
 		log.Fatalln(err)
 	}
+	// return err
 	return err
 }
