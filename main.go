@@ -6,6 +6,7 @@ import (
 )
 
 func main() {
+	// init関数を呼びだす
 	fmt.Println(models.Db)
 
 	// u := &models.User{}

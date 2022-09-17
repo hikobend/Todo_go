@@ -8,24 +8,32 @@ import (
 	"log"
 
 	"github.com/google/uuid"
+	// ドライバのインストール
 	_ "github.com/mattn/go-sqlite3"
 )
 
 // テーブルの作成
 var Db *sql.DB
 
+// エラーの宣言
 var err error
 
+// テーブル名の宣言
 const (
 	tableNameUser = "users"
 )
 
+// テーブルはmain関数の前に作成
 func init() {
+	// データーベースとエラー。ドライバとデーターベース名
 	Db, err = sql.Open(config.Config.SQLDriver, config.Config.DbName)
+	// エラーハンドリング
 	if err != nil {
 		log.Fatalln(err)
 	}
 
+	// コマンドの作成
+	// 最後にテーブル名を渡す
 	cmdU := fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s(
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		uuid STRING NOT NULL UNIQUE,
@@ -33,6 +41,7 @@ func init() {
 		email STRING,
 		password STRING,
 		created_at DATETIME)`, tableNameUser)
+	// コマンドを呼び出し
 	Db.Exec(cmdU)
 }
 
