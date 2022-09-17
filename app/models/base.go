@@ -21,6 +21,7 @@ var err error
 // テーブル名の宣言
 const (
 	tableNameUser = "users"
+	// todoテーブル追加
 	tableNameTodo = "todos"
 )
 
@@ -45,12 +46,14 @@ func init() {
 	// コマンドを呼び出し
 	Db.Exec(cmdU)
 
+	// コマンドを作成
 	cmdT := fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s(
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		content TEXT,
 		user_id INTEGER,
 		created_at DATETIME)`, tableNameTodo)
 
+	// コマンド呼び出し
 	Db.Exec(cmdT)
 
 }
