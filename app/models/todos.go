@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// struct作成
 type Todo struct {
 	ID        int
 	Content   string
@@ -12,13 +13,16 @@ type Todo struct {
 	CreatedAt time.Time
 }
 
+// Userユーザーのメソッドとして作成
 func (u *User) CreateTodo(content string) (err error) {
+	// コマンド作成
 	cmd := `insert into todos (
 		content,
 		user_id,
 		created_at) values (?, ?, ?)`
-
+	// コマンド実行
 	_, err = Db.Exec(cmd, content, u.ID, time.Now())
+	// エラーハンドリング
 	if err != nil {
 		log.Fatalln(err)
 	}

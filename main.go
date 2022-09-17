@@ -42,6 +42,7 @@ func main() {
 	// u, _ = models.GetUser(1)
 	// fmt.Println(u)
 
+	// id : 2にfirst todoを追加
 	// user, _ := models.GetUser(2)
 	// user.CreateTodo("first todo")
 
