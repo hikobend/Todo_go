@@ -19,4 +19,10 @@ func main() {
 	u, _ := models.GetUser(1)
 
 	fmt.Println(u)
+
+	u.Name = "kohei2"
+	u.Email = "kohei2@test.com"
+	u.UpdateUser()
+	u, _ = models.GetUser(1)
+	fmt.Println(u)
 }
