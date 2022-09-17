@@ -11,8 +11,8 @@ func main() {
 
 	// ポインタ呼び出し
 	// u := &models.User{}
-	// u.Name = "kohei"
-	// u.Email = "kohei@test.com"
+	// u.Name = "kohei2"
+	// u.Email = "kohei2@test.com"
 	// u.PassWord = "koheidesu"
 	// uを表示
 	// fmt.Println(u)
@@ -20,25 +20,49 @@ func main() {
 	// ユーザーを作成
 	// u.CreateUser()
 
-	// 作成したidが1番を取ってくる
-	u, _ := models.GetUser(1)
+	// // 作成したidが1番を取ってくる
+	// u, _ := models.GetUser(1)
 
-	// ユーザーを出力する
-	fmt.Println(u)
+	// // ユーザーを出力する
+	// fmt.Println(u)
 
-	// ユーザー更新
-	u.Name = "kohei2"
-	u.Email = "kohei2@test.com"
-	// ユーザー更新
-	u.UpdateUser()
-	// ユーザー取得
-	u, _ = models.GetUser(1)
-	// ユーザー表示
-	fmt.Println(u)
+	// // ユーザー更新
+	// u.Name = "kohei2"
+	// u.Email = "kohei2@test.com"
+	// // ユーザー更新
+	// u.UpdateUser()
+	// // ユーザー取得
+	// u, _ = models.GetUser(1)
+	// // ユーザー表示
+	// fmt.Println(u)
 
-	// ユーザー削除
-	u.DeleteUser()
-	// ユーザー表示
-	u, _ = models.GetUser(1)
-	fmt.Println(u)
+	// // ユーザー削除
+	// u.DeleteUser()
+	// // ユーザー表示
+	// u, _ = models.GetUser(1)
+	// fmt.Println(u)
+
+	// user, _ := models.GetUser(2)
+	// user.CreateTodo("first todo")
+
+	// t, _ := models.GetTodo(1)
+	// fmt.Println(t)
+
+	// user, _ := models.GetUser(3)
+	// user.CreateTodo("Third Todo")
+
+	// todos, _ := models.GetTodos()
+	// for _, v := range todos {
+	// 	fmt.Println(v)
+	// }
+
+	// user2, _ := models.GetUser(3)
+	// todos, _ := user2.GetTodoByUser()
+	// for _, v := range todos {
+	// 	fmt.Println(v)
+	// }
+
+	t, _ := models.GetTodo(1)
+	t.Content = "Update Todo"
+	t.UpdateTodo()
 }

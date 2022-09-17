@@ -2,3 +2,4 @@
 2022/09/16 20:25:40 main.go:17: test
 2022/09/16 21:14:12 main.go:17: test
 2022/09/16 22:43:10 users.go:33: sql: converting argument $1 type: unsupported type func() uuid.UUID, a func
+2022/09/17 17:42:38 todos.go:23: near "value": syntax error

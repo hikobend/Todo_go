@@ -21,6 +21,7 @@ var err error
 // テーブル名の宣言
 const (
 	tableNameUser = "users"
+	tableNameTodo = "todos"
 )
 
 // テーブルはmain関数の前に作成
@@ -43,6 +44,15 @@ func init() {
 		created_at DATETIME)`, tableNameUser)
 	// コマンドを呼び出し
 	Db.Exec(cmdU)
+
+	cmdT := fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s(
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		content TEXT,
+		user_id INTEGER,
+		created_at DATETIME)`, tableNameTodo)
+
+	Db.Exec(cmdT)
+
 }
 
 // UUID作成
