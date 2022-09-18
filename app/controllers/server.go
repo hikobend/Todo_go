@@ -28,6 +28,7 @@ func StartMainServer() error {
 	// URLの登録
 	// 第二引数はハンドラ
 	http.HandleFunc("/", top)
+	http.HandleFunc("/signup", signup)
 	// ポート作成
 	return http.ListenAndServe(":"+config.Config.Port, nil)
 }
