@@ -19,6 +19,7 @@ type ConfigList struct {
 	DbName string
 	// ログを残すファイル
 	LogFile string
+	Static  string
 }
 
 // Configリストを外部から呼び出せるように、グローバルに変数宣言
@@ -48,5 +49,6 @@ func LoadConfig() {
 		SQLDriver: cfg.Section("db").Key("driver").String(),
 		DbName:    cfg.Section("db").Key("name").String(),
 		LogFile:   cfg.Section("web").Key("logfile").String(),
+		Static:    cfg.Section("web").Key("static").String(),
 	}
 }
