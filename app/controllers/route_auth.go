@@ -6,27 +6,36 @@ import (
 	"net/http"
 )
 
+// サインアップ関数
 func signup(w http.ResponseWriter, r *http.Request) {
+	// GETのときの処理
 	if r.Method == "GET" {
 		_, err := session(w, r)
 		if err != nil {
+			// signup.htmlテンプレートファイルだけを出力するようにする
 			generateHTML(w, nil, "layout", "public_navbar", "signup")
 		} else {
 			http.Redirect(w, r, "/todos", 302)
 		}
+		// POSTのときの処理
 	} else if r.Method == "POST" {
+		// 入力フォームの値を取得する
 		err := r.ParseForm()
 		if err != nil {
-			log.Fatalln(err)
+			log.Println(err)
 		}
+		// Userを作成
 		user := models.User{
+			// Nameを入力フォームから受け取る
 			Name:     r.PostFormValue("name"),
 			Email:    r.PostFormValue("email"),
 			PassWord: r.PostFormValue("password"),
 		}
+		// user作成メソッドを使用
 		if err := user.CreateUser(); err != nil {
-			log.Fatalln(err)
+			log.Println(err)
 		}
+		// ユーザーの登録が成功したら、トップページにリダイレクトさせる
 		http.Redirect(w, r, "/", 302)
 	}
 }

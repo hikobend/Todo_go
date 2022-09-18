@@ -40,6 +40,7 @@ func StartMainServer() error {
 	// URLの登録
 	// 第二引数はハンドラ
 	http.HandleFunc("/", top)
+	// URLに登録
 	http.HandleFunc("/signup", signup)
 	http.HandleFunc("/login", login)
 	http.HandleFunc("/authenticate", authenticate)

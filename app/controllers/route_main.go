@@ -9,6 +9,7 @@ import (
 func top(w http.ResponseWriter, r *http.Request) {
 	_, err := session(w, r)
 	if err != nil {
+		// 全体で読み込むtemplateたち
 		generateHTML(w, "Hello", "layout", "public_navbar", "top")
 	} else {
 		http.Redirect(w, r, "/todos", 302)
