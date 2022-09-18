@@ -17,9 +17,13 @@ func generateHTML(w http.ResponseWriter, data interface{}, filenames ...string) 
 	templates.ExecuteTemplate(w, "layout", data)
 }
 
+// サーバーの立ち上げコード作成
 func StartMainServer() error {
 	files := http.FileServer(http.Dir(config.Config.Static))
 	http.Handle("/static/", http.StripPrefix("/static/", files))
+	// URLの登録
+	// 第二引数はハンドラ
 	http.HandleFunc("/", top)
+	// ポート作成
 	return http.ListenAndServe(":"+config.Config.Port, nil)
 }
