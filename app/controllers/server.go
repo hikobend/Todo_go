@@ -19,6 +19,7 @@ func generateHTML(w http.ResponseWriter, data interface{}, filenames ...string) 
 
 // サーバーの立ち上げコード作成
 func StartMainServer() error {
+	// CSS, jsファイル読み込み
 	files := http.FileServer(http.Dir(config.Config.Static))
 	http.Handle("/static/", http.StripPrefix("/static/", files))
 	// URLの登録
