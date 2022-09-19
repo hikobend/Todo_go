@@ -30,12 +30,15 @@ func index(w http.ResponseWriter, r *http.Request) {
 		// トップページにリダイレクト
 		http.Redirect(w, r, "/", 302)
 	} else {
+		//sessionを取り出す
 		user, err := sess.GetUserBySession()
 		if err != nil {
 			log.Println(err)
 		}
+		// todosをByUserから取り出す
 		todos, _ := user.GetTodoByUser()
 		user.Todos = todos
+		// userの情報を渡す
 		// sessionが存在する場合、indexを表示
 		generateHTML(w, user, "layout", "private_navbar", "index")
 	}

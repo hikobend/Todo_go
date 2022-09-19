@@ -13,7 +13,8 @@ type User struct {
 	Email     string
 	PassWord  string
 	CreatedAt time.Time
-	Todos     []Todo
+	//Userのストラクトに入れるためにスライス追加
+	Todos []Todo
 }
 
 // session struct作成
@@ -194,9 +195,13 @@ func (sess *Session) DeleteSessionByUUID() (err error) {
 	return err
 }
 
+// index関数のsessから取り出す関数を作成
 func (sess *Session) GetUserBySession() (user User, err error) {
+	// User型宣言
 	user = User{}
+	// コマンド作成
 	cmd := `select id, uuid, name, email, created_at FROM users where id = ?`
+	// コマンド実行。sessionUserIDを渡す
 	err = Db.QueryRow(cmd, sess.UserID).Scan(
 		&user.ID,
 		&user.UUID,
