@@ -40,28 +40,35 @@ func signup(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// 関数作成
 func login(w http.ResponseWriter, r *http.Request) {
 	_, err := session(w, r)
 	if err != nil {
+		// 表示するtemplateを設定
 		generateHTML(w, nil, "layout", "public_navbar", "login")
 	} else {
 		http.Redirect(w, r, "/todos", 302)
 	}
 }
 
+// ユーザーの認証認証
 func authenticate(w http.ResponseWriter, r *http.Request) {
+	// フォームから値を取得
 	err := r.ParseForm()
+	// フォームからメールを取得
 	user, err := models.GetUserByEmail(r.PostFormValue("email"))
 	if err != nil {
 		log.Fatalln(err)
+		// ログインページにリダイレクト
 		http.Redirect(w, r, "/login", 302)
 	}
+	// パスワードが一致しているか
 	if user.PassWord == models.Encrypt(r.PostFormValue("password")) {
 		session, err := user.CreateSession()
 		if err != nil {
-			log.Fatalln(err)
+			log.Println(err)
 		}
-
+		// cookie作成
 		cookie := http.Cookie{
 			Name:     "_cookie",
 			Value:    session.UUID,
@@ -69,8 +76,11 @@ func authenticate(w http.ResponseWriter, r *http.Request) {
 		}
 		http.SetCookie(w, &cookie)
 
+		// ログインに成功
+		// リダイレクト
 		http.Redirect(w, r, "/", 302)
 	} else {
+		// パスワード不一致
 		http.Redirect(w, r, "/login", 302)
 	}
 }

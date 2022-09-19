@@ -22,7 +22,8 @@ var err error
 const (
 	tableNameUser = "users"
 	// todoテーブル追加
-	tableNameTodo    = "todos"
+	tableNameTodo = "todos"
+	// sessionテーブル作成
 	tableNameSession = "sessions"
 )
 
@@ -57,6 +58,7 @@ func init() {
 	// コマンド呼び出し
 	Db.Exec(cmdT)
 
+	// コマンド作成
 	cmdS := fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s(
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		uuid STRING NOT NULL UNIQUE,
@@ -64,6 +66,7 @@ func init() {
 		user_id INTEGER,
 		created_at DATETIME)`, tableNameSession)
 
+	// コマンド実行
 	Db.Exec(cmdS)
 }
 

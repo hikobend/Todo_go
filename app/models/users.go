@@ -15,6 +15,7 @@ type User struct {
 	CreatedAt time.Time
 }
 
+// session struct作成
 type Session struct {
 	ID        int
 	UUID      string
@@ -99,9 +100,13 @@ func (u *User) DeleteUser() (err error) {
 	return err
 }
 
+// ログインでメールアドレスを入力して、メールアドレスからユーザーを取得する
 func GetUserByEmail(email string) (user User, err error) {
+	// User型宣言
 	user = User{}
+	// コマンド作成
 	cmd := `select id, uuid, name, email, password, created_at from users where email = ?`
+	// コマンド実行
 	err = Db.QueryRow(cmd, email).Scan(
 		&user.ID,
 		&user.UUID,
@@ -113,20 +118,30 @@ func GetUserByEmail(email string) (user User, err error) {
 	return user, err
 }
 
+// セッションを作成するメソッド
+// Userのメソッドとして作成
 func (u *User) CreateSession() (session Session, err error) {
+	// session型宣言
 	session = Session{}
+	// sessionを作成するコマンド
 	cmd1 := `insert into sessions (
 		uuid,
 		email,
 		user_id,
 		created_at) values (?, ?, ?, ?)`
+
+	// コマンド実行
 	_, err = Db.Exec(cmd1, createUUID(), u.Email, u.ID, time.Now())
+	// エラーハンドリング
 	if err != nil {
 		log.Fatalln(err)
 	}
 
+	// 取得するためのコマンド
 	cmd2 := `select id, uuid, email, user_id, created_at from sessions where user_id = ? and email = ?`
 
+	// 取得したいのは一つ : QueryRow
+	// コマンド実行
 	err = Db.QueryRow(cmd2, u.ID, u.Email).Scan(
 		&session.ID,
 		&session.UUID,
@@ -136,9 +151,12 @@ func (u *User) CreateSession() (session Session, err error) {
 	return session, err
 }
 
+// sessionがデータベースに存在するか確認するためのメソッド
 func (sess *Session) CheckSession() (valid bool, err error) {
+	// コマンド作成
 	cmd := `select id, uuid, email, user_id, created_at from sessions where uuid = ?`
 
+	// コマンド実行
 	err = Db.QueryRow(cmd, sess.UUID).Scan(
 		&sess.ID,
 		&sess.UUID,
@@ -146,11 +164,16 @@ func (sess *Session) CheckSession() (valid bool, err error) {
 		&sess.UserID,
 		&sess.CreatedAt)
 
+	// sessionが存在するか確認
+	// エラーがある場合
 	if err != nil {
+		// 存在しない
 		valid = false
 		return
 	}
+	// sessiionの初期値が0でない
 	if sess.ID != 0 {
+		// validをtrueにして
 		valid = true
 	}
 	return valid, err
