@@ -87,15 +87,20 @@ func todoSave(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// Edit関数作成
 func todoEdit(w http.ResponseWriter, r *http.Request, id int) {
+	// session確認
 	sess, err := session(w, r)
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
 	} else {
+		// ユーザーの確認
 		_, err := sess.GetUserBySession()
+		// ユーザーがいない場合
 		if err != nil {
 			log.Println(err)
 		}
+		// 引数のtodoから値を取得したい
 		t, err := models.GetTodo(id)
 		if err != nil {
 			log.Println(err)
@@ -104,23 +109,33 @@ func todoEdit(w http.ResponseWriter, r *http.Request, id int) {
 	}
 }
 
+// Update関数
 func todoUpdate(w http.ResponseWriter, r *http.Request, id int) {
+	// session確認
 	sess, err := session(w, r)
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
 	} else {
-		log.Println(err)
+		// sessionがある場合フォームを取得する
+		err := r.ParseForm()
+		if err != nil {
+			log.Println(err)
+		}
+		// userを取得する
+		user, err := sess.GetUserBySession()
+		if err != nil {
+			log.Println(err)
+		}
+		// フォームから値を取得する
+		content := r.PostFormValue("content")
+		// todo strunc作成
+		t := &models.Todo{ID: id, Content: content, UserID: user.ID}
+		if err := t.UpdateTodo(); err != nil {
+			log.Println(err)
+		}
+		// Updateしたら、Todoにリダイレクト
+		http.Redirect(w, r, "/todos", 302)
 	}
-	user, err := sess.GetUserBySession()
-	if err != nil {
-		log.Println(err)
-	}
-	content := r.PostFormValue("content")
-	t := &models.Todo{ID: id, Content: content, UserID: user.ID}
-	if err := t.UpdateTodo(); err != nil {
-		log.Println(err)
-	}
-	http.Redirect(w, r, "/todos", 302)
 }
 
 func todoDelete(w http.ResponseWriter, r *http.Request, id int) {

@@ -40,21 +40,29 @@ func session(w http.ResponseWriter, r *http.Request) (sess models.Session, err e
 	return sess, err
 }
 
+// 正規表現
 var validPath = regexp.MustCompile("^/todos/(edit|update|delete)/([0-9]+)")
 
+// idを取得する関数
 func parseURL(fn func(http.ResponseWriter, *http.Request, int)) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		// マッチした場所をスライスで取得
 		q := validPath.FindStringSubmatch(r.URL.Path)
+		// 何もマッチしない場合
 		if q == nil {
+			// NotFoundを返す
 			http.NotFound(w, r)
 			return
 		}
+		// 最後に受け取った部分をintで受け取る
 		qi, err := strconv.Atoi(q[2])
 		if err != nil {
+			// NotFoundを返す
 			http.NotFound(w, r)
 			return
 		}
 
+		// 引数で渡した、Res Req, idを渡す
 		fn(w, r, qi)
 	}
 }
