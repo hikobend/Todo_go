@@ -21,11 +21,17 @@ func generateHTML(w http.ResponseWriter, data interface{}, filenames ...string) 
 	templates.ExecuteTemplate(w, "layout", data)
 }
 
+// cookieを取得する関数作成
 func session(w http.ResponseWriter, r *http.Request) (sess models.Session, err error) {
+	// HTTPリクエストからcookieを取得する
 	cookie, err := r.Cookie("_cookie")
+	// エラーがnil
 	if err == nil {
+		// sessionのstruct作成
+		// ユーザーを作成してそのUUIDを保存
 		sess = models.Session{UUID: cookie.Value}
 		if ok, _ := sess.CheckSession(); !ok {
+			// 存在しない場合、エラーを生成
 			err = fmt.Errorf("Invalid session")
 		}
 	}

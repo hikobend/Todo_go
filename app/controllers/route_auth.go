@@ -10,11 +10,14 @@ import (
 func signup(w http.ResponseWriter, r *http.Request) {
 	// GETのときの処理
 	if r.Method == "GET" {
+		// エラーが存在したら
 		_, err := session(w, r)
 		if err != nil {
 			// signup.htmlテンプレートファイルだけを出力するようにする
 			generateHTML(w, nil, "layout", "public_navbar", "signup")
+			// sessionが存在したら
 		} else {
+			// todosにRediret
 			http.Redirect(w, r, "/todos", 302)
 		}
 		// POSTのときの処理
@@ -42,10 +45,12 @@ func signup(w http.ResponseWriter, r *http.Request) {
 
 // 関数作成
 func login(w http.ResponseWriter, r *http.Request) {
+	// エラーが存在したら
 	_, err := session(w, r)
 	if err != nil {
 		// 表示するtemplateを設定
 		generateHTML(w, nil, "layout", "public_navbar", "login")
+		// sessioonが存在したら
 	} else {
 		http.Redirect(w, r, "/todos", 302)
 	}
