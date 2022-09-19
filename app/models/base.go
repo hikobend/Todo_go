@@ -23,6 +23,8 @@ const (
 	tableNameUser = "users"
 	// todoテーブル追加
 	tableNameTodo = "todos"
+	// sessionテーブル作成
+	tableNameSession = "sessions"
 )
 
 // テーブルはmain関数の前に作成
@@ -56,6 +58,16 @@ func init() {
 	// コマンド呼び出し
 	Db.Exec(cmdT)
 
+	// コマンド作成
+	cmdS := fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s(
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		uuid STRING NOT NULL UNIQUE,
+		email STRING,
+		user_id INTEGER,
+		created_at DATETIME)`, tableNameSession)
+
+	// コマンド実行
+	Db.Exec(cmdS)
 }
 
 // UUID作成

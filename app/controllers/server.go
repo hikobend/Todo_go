@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"fmt"
+	"hello/app/models"
 	"hello/config"
 	"html/template"
 	"net/http"
@@ -20,6 +21,23 @@ func generateHTML(w http.ResponseWriter, data interface{}, filenames ...string) 
 	templates.ExecuteTemplate(w, "layout", data)
 }
 
+// cookieを取得する関数作成
+func session(w http.ResponseWriter, r *http.Request) (sess models.Session, err error) {
+	// HTTPリクエストからcookieを取得する
+	cookie, err := r.Cookie("_cookie")
+	// エラーがnil
+	if err == nil {
+		// sessionのstruct作成
+		// ユーザーを作成してそのUUIDを保存
+		sess = models.Session{UUID: cookie.Value}
+		if ok, _ := sess.CheckSession(); !ok {
+			// 存在しない場合、エラーを生成
+			err = fmt.Errorf("Invalid session")
+		}
+	}
+	return sess, err
+}
+
 // サーバーの立ち上げコード作成
 func StartMainServer() error {
 	// CSS, jsファイル読み込み
@@ -28,6 +46,12 @@ func StartMainServer() error {
 	// URLの登録
 	// 第二引数はハンドラ
 	http.HandleFunc("/", top)
+	// URLに登録
+	http.HandleFunc("/signup", signup)
+	http.HandleFunc("/login", login)
+	http.HandleFunc("/authenticate", authenticate)
+	http.HandleFunc("/logout", logout)
+	http.HandleFunc("/todos", index)
 	// ポート作成
 	return http.ListenAndServe(":"+config.Config.Port, nil)
 }
