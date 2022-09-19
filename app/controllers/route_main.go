@@ -44,32 +44,45 @@ func index(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// todo作成関数
 func todoNew(w http.ResponseWriter, r *http.Request) {
+	// ログイン確認
 	_, err := session(w, r)
+	// エラーハンドリング
 	if err != nil {
+		// ログインページログイン
 		http.Redirect(w, r, "/login", 302)
 	} else {
 		generateHTML(w, nil, "layout", "private_navbar", "todo_new")
 	}
 }
 
+// todo更新関数
 func todoSave(w http.ResponseWriter, r *http.Request) {
 	sess, err := session(w, r)
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
 	} else {
+		// 入力フォームの値を取得する
 		err = r.ParseForm()
+		// ハンドリング
 		if err != nil {
 			log.Println(err)
 		}
+		// ユーザーの取得
 		user, err := sess.GetUserBySession()
+		// エラーハンドリング
 		if err != nil {
 			log.Println(err)
 		}
+		// フォームの値を取得
 		content := r.PostFormValue("content")
+		// 取得したコンテントを渡す
+		// エラーハンドリング
 		if err := user.CreateTodo(content); err != nil {
 			log.Println(err)
 		}
+		// todos一覧画面に遷移
 		http.Redirect(w, r, "/todos", 302)
 	}
 }
