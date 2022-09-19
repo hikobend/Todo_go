@@ -90,16 +90,23 @@ func authenticate(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// ログアウト関数作成
 func logout(w http.ResponseWriter, r *http.Request) {
+	// cookie取得
 	cookie, err := r.Cookie("_cookie")
 
+	// エラーハンドリング
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 	}
 
+	// エラーがErrNoCookieと異なる場合
 	if err != http.ErrNoCookie {
+		// session struct作成
 		session := models.Session{UUID: cookie.Value}
+		// UUIDと一致するものを削除
 		session.DeleteSessionByUUID()
 	}
+	// 削除したらRedirectする
 	http.Redirect(w, r, "/login", 302)
 }
