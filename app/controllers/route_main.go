@@ -138,19 +138,24 @@ func todoUpdate(w http.ResponseWriter, r *http.Request, id int) {
 	}
 }
 
+// delete関数
 func todoDelete(w http.ResponseWriter, r *http.Request, id int) {
+	// session確認
 	sess, err := session(w, r)
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
 	} else {
+		// ユーザー確認
 		_, err := sess.GetUserBySession()
 		if err != nil {
 			log.Println(err)
 		}
+		// idを取得する
 		t, err := models.GetTodo(id)
 		if err != nil {
 			log.Println(err)
 		}
+		// エラーがなければ削除する
 		if err := t.DeleteTodo(); err != nil {
 			log.Println(err)
 		}

@@ -41,6 +41,7 @@ func session(w http.ResponseWriter, r *http.Request) (sess models.Session, err e
 }
 
 // 正規表現
+// edit, update, delete
 var validPath = regexp.MustCompile("^/todos/(edit|update|delete)/([0-9]+)")
 
 // idを取得する関数
