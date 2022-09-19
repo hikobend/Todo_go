@@ -6,6 +6,8 @@ import (
 	"hello/config"
 	"html/template"
 	"net/http"
+	"regexp"
+	"strconv"
 )
 
 // 関数を作成して共通化
@@ -38,6 +40,25 @@ func session(w http.ResponseWriter, r *http.Request) (sess models.Session, err e
 	return sess, err
 }
 
+var validPath = regexp.MustCompile("^/todos/(edit|update)/([0-9]+)")
+
+func parseURL(fn func(http.ResponseWriter, *http.Request, int)) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		q := validPath.FindStringSubmatch(r.URL.Path)
+		if q == nil {
+			http.NotFound(w, r)
+			return
+		}
+		qi, err := strconv.Atoi(q[2])
+		if err != nil {
+			http.NotFound(w, r)
+			return
+		}
+
+		fn(w, r, qi)
+	}
+}
+
 // サーバーの立ち上げコード作成
 func StartMainServer() error {
 	// CSS, jsファイル読み込み
@@ -54,6 +75,8 @@ func StartMainServer() error {
 	http.HandleFunc("/todos", index)
 	http.HandleFunc("/todos/new", todoNew)
 	http.HandleFunc("/todos/save", todoSave)
+	http.HandleFunc("/todos/edit/", parseURL(todoEdit))
+	http.HandleFunc("/todos/update/", parseURL(todoUpdate))
 	// ポート作成
 	return http.ListenAndServe(":"+config.Config.Port, nil)
 }
